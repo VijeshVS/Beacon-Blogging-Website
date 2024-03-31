@@ -6,21 +6,19 @@ import {SignButton} from '../components/SignButton'
 import { Quote } from "../components/Quote";
 import { useNavigationHandler } from "../hooks/useNavigationHandler";
 
-export function SignUp (){
+export function SignIn (){
     const navigationHandler = useNavigationHandler();
 
     return <div className="flex w-full h-screen">
         <div className="flex flex-1 flex-row justify-center items-center">
         <div>
-            <Title text="Create an account"/>
-            <Director clickHandler={navigationHandler} toRoute="signin" text="Already have account?" direct="Login"/>
-            <InputLabels label="Username"/>
-            <InputField placeholder="Enter your username" type="text"/>
+            <Title text="Please login to continue"/>
+            <Director text="Don't have an account?" clickHandler={navigationHandler} toRoute="signup" direct="Register"/>
             <InputLabels label="Email"/>
             <InputField placeholder="m@example.com" type="email"/>
             <InputLabels label="Password"/>
             <InputField placeholder="Enter your password" type="password"/>
-            <SignButton text="Sign Up"/>
+            <SignButton text="Sign In"/>
         </div>
         </div>
         <div className="hidden md:flex bg-gray-200 flex-1 justify-center items-center">
