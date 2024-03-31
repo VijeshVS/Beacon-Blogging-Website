@@ -1,5 +1,6 @@
 import { Hono } from 'hono'
 import { verify } from 'hono/jwt';
+import { createPostInput, createPostType,updatePostInput,updatePostType } from '@vijeshvs/common2/dist';
 
 export const blog = new Hono<{
     Bindings:{
@@ -18,7 +19,7 @@ export const blog = new Hono<{
   
     try{
       const user = await verify(token,c.env.JWT_SECRET);
-      c.set("userId",user.id) // later get it by c.get
+      c.set("userId",user.id) 
       await next();
     }
     catch(e){
@@ -34,13 +35,24 @@ export const blog = new Hono<{
     const prisma = c.get('prisma')
     const body = await c.req.json();
 
+    const post:createPostType = {
+        title: body.title,
+        content: body.content,
+        authorId: userId
+    }
+
+    const validate = createPostInput.safeParse(post)
+
+    if(!validate.success){
+      c.status(411)
+      return c.json({
+        msg : "Invalid Inputs"
+      })
+    }
+
     try{
       await prisma.Post.create({
-        data:{
-            title: body.title,
-            content: body.content,
-            authorId: userId
-        }
+        data: post
       })
 
       return c.json({
@@ -59,17 +71,27 @@ export const blog = new Hono<{
     const prisma = c.get('prisma')
     const body = await c.req.json();
     const post_id = body.postId;
-    const updates:any = {}
+    
+    const updatePost:updatePostType = {
+        title : body.title,
+        content : body.content
+    } 
 
-    if(body.title) updates.title = body.title
-    if(body.content) updates.content = body.content
+    const validate = updatePostInput.safeParse(updatePost)
+
+    if(!validate.success){
+      c.status(411)
+      return c.json({
+        msg : "Invalid Inputs"
+      })
+    }
 
     try{
       await prisma.Post.update({
         where:{
           id : post_id
         },
-        data : updates
+        data : updatePost
       })
 
       return c.json({

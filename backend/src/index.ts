@@ -2,17 +2,21 @@ import { Hono } from 'hono'
 import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { user } from '../routes/user'
-import { blog } from './blog'
+import { blog } from '../routes/blog'
+
+type Bindings = {
+  DATABASE_URL : string,
+  JWT_SECRET: string
+}
+
+type Variables = {
+  userId : string,
+  prisma : any
+}
 
 const app = new Hono<{
-  Bindings : {
-    DATABASE_URL : string,
-    JWT_SECRET: string
-  },
-  Variables: {
-    userId : string,
-    prisma : any
-  }
+  Bindings : Bindings,
+  Variables : Variables
 }>()
 
 app.use('*', async (c,next) => {
