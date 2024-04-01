@@ -5,6 +5,7 @@ import { SignUp } from './pages/SignUp'
 import { SignIn } from './pages/SignIn'
 import { BlogPage } from './pages/BlogPage'
 import { Homepage } from './pages/HomePage'
+import { CreateBlogPost } from './pages/CreateBlogPage'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/signin' element={<SignIn/>}/>
         <Route path='/blog/:id' element={<BlogPage/>}/>
         <Route path='/' element={<Homepage/>}/>
+        <Route path='/newblog' element={<CreateBlogPost/>}/>
       </Routes>
       </BrowserRouter>
   )
