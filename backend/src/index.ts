@@ -3,6 +3,8 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { user } from '../routes/user'
 import { blog } from '../routes/blog'
+import { cors } from 'hono/cors'
+
 
 type Bindings = {
   DATABASE_URL : string,
@@ -18,6 +20,8 @@ const app = new Hono<{
   Bindings : Bindings,
   Variables : Variables
 }>()
+
+app.use(cors())
 
 app.use('*', async (c,next) => {
 	const prisma = new PrismaClient({

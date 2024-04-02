@@ -1,6 +1,7 @@
 import { Hono } from 'hono'
 import { sign } from 'hono/jwt'
-import {signUpInput,signInInput,signInType,signUpType} from '@vijeshvs/common2/dist/index'
+import { signUpInput,signInInput,signInType,signUpType,UserUpdateInput,UserUpdateType } from '@vijeshvs/common2/dist/index'
+import {verify} from 'hono/jwt'
 
 export const user = new Hono<{
     Bindings:{
@@ -8,9 +9,11 @@ export const user = new Hono<{
         JWT_SECRET:string
     },
     Variables:{
-        prisma:any
+        prisma:any,
+        userId : string
     }
 }>()
+
 
 user.get('/healthy',(c)=>c.text("Server is healthy!!"))
 
@@ -84,3 +87,51 @@ user.post('/signup', async (c) => {
       })
     }
   })
+
+ user.post('/update',async (c)=>{
+    const prisma = c.get('prisma')
+    const body = await c.req.json();
+
+    const UserData:UserUpdateType = {
+      name:body.name,
+      email:body.email,
+      description:body.description,
+      imgLink : body.imgLink
+    }
+
+    const validate = UserUpdateInput.safeParse(UserData)
+
+    if(!validate.success){
+      c.status(411)
+      return c.json({
+        msg : "Invalid inputs"
+      })
+    }
+
+    const token_header = c.req.header('authorization') || "no user";
+    const token = token_header.split(' ')[1];
+
+    try{
+      const user = await verify(token,c.env.JWT_SECRET);
+      c.set("userId",user.id)
+
+      await prisma.user.update({
+        where: {
+          id : user.id
+        },
+        data : UserData
+      })
+
+      return c.json({
+        msg: "User updated successfully!!"
+      })
+
+    }
+    catch(e){
+      c.status(403)
+      return c.json({
+        msg:"User is not authenticated",
+      })
+    }
+
+ })

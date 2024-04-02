@@ -11,6 +11,13 @@ export const signInInput = z.object({
     password: z.string().min(6)
 })
 
+export const UserUpdateInput = z.object({
+    name : z.string().optional(),
+    email : z.string().email().optional(),
+    description : z.string().optional(),
+    imgLink : z.string().optional()
+})
+
 export const createPostInput = z.object({
     title : z.string(),
     content : z.string(),
@@ -29,4 +36,5 @@ export type signUpType = z.infer<typeof signUpInput>
 export type signInType = z.infer<typeof signInInput>
 export type createPostType = z.infer<typeof createPostInput>
 export type updatePostType = z.infer<typeof updatePostInput>
+export type UserUpdateType = z.infer<typeof UserUpdateInput>
 

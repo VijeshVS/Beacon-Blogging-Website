@@ -9,10 +9,14 @@ import { CreateBlogPost } from './pages/CreateBlogPage'
 import { Feed } from './pages/Feed'
 import { UpdateBlogPage } from './pages/UpdateBlogPage'
 import { UpdateUserPage } from './pages/UpdateUserPage'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
 
   return (
+    <div>
+      <ToastContainer/>
       <BrowserRouter>
       <Routes>
         <Route path='/test' element={<Test/>}/>
@@ -24,9 +28,9 @@ function App() {
         <Route path='/feed' element={<Feed/>}/>
         <Route path='/updateblog' element={<UpdateBlogPage/>}/>
         <Route path='/updateuser' element={<UpdateUserPage/>}/>
-
       </Routes>
       </BrowserRouter>
+      </div>
   )
 }
 

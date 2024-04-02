@@ -35,10 +35,17 @@ export const blog = new Hono<{
     const prisma = c.get('prisma')
     const body = await c.req.json();
 
+    let date = new Date(Date.now());
+    var Months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 
+    'October', 'November', 'December']
+    const dateCreated = date.getDay() + " " + Months[date.getMonth()] + " " + date.getFullYear()
+
     const post:createPostType = {
         title: body.title,
         content: body.content,
-        authorId: userId
+        authorId: userId,
+        description : body.description,
+        created : dateCreated
     }
 
     const validate = createPostInput.safeParse(post)
@@ -74,7 +81,8 @@ export const blog = new Hono<{
     
     const updatePost:updatePostType = {
         title : body.title,
-        content : body.content
+        content : body.content,
+        description : body.description
     } 
 
     const validate = updatePostInput.safeParse(updatePost)

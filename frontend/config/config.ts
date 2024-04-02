@@ -1,0 +1,1 @@
+export const backend = 'https://backend.vijeshsshetty.workers.dev/api/v1'
