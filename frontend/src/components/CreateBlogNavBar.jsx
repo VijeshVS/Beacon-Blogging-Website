@@ -13,7 +13,7 @@ export function CreateBlogPostNavbar({text,handler,toRoute}){
         <Buttons text={text} toRoute={toRoute} handler={handler}/>
         </div>  
         <div>
-        <img className="ml-3 h-10 w-10 rounded-3xl border-2 border-gray-200" src="https://t4.ftcdn.net/jpg/04/06/91/91/360_F_406919161_J0pGxe1sewqnk5dnvyRS77MKmEd6SVac.jpg"/>
+        <img onClick={()=>navigator('updateuser')} className="ml-3 h-10 w-10 rounded-3xl border-2 border-gray-200 cursor-pointer" src="https://t4.ftcdn.net/jpg/04/06/91/91/360_F_406919161_J0pGxe1sewqnk5dnvyRS77MKmEd6SVac.jpg"/>
         </div>
         </div>
 </div>

@@ -14,12 +14,15 @@ export const signInInput = z.object({
 export const createPostInput = z.object({
     title : z.string(),
     content : z.string(),
-    authorId : z.string()
+    authorId : z.string(),
+    created : z.string(),
+    description : z.string()
 })
 
 export const updatePostInput = z.object({
     title: z.string().optional(),
-    content : z.string().optional()
+    content : z.string().optional(),
+    description : z.string().optional()
 })
 
 export type signUpType = z.infer<typeof signUpInput>

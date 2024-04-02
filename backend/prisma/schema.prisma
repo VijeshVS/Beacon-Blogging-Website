@@ -12,6 +12,8 @@ model User {
   email    String   @unique
   name     String?
   password String
+  description String?
+  imgLink String?
   posts    Post[]
 }
 
@@ -22,4 +24,6 @@ model Post {
   published Boolean  @default(false)
   author    User     @relation(fields: [authorId], references: [id])
   authorId  String
+  description String
+  created String
 }

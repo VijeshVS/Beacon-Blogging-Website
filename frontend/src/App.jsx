@@ -7,6 +7,8 @@ import { BlogPage } from './pages/BlogPage'
 import { Homepage } from './pages/HomePage'
 import { CreateBlogPost } from './pages/CreateBlogPage'
 import { Feed } from './pages/Feed'
+import { UpdateBlogPage } from './pages/UpdateBlogPage'
+import { UpdateUserPage } from './pages/UpdateUserPage'
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
         <Route path='/' element={<Homepage/>}/>
         <Route path='/newblog' element={<CreateBlogPost/>}/>
         <Route path='/feed' element={<Feed/>}/>
+        <Route path='/updateblog' element={<UpdateBlogPage/>}/>
+        <Route path='/updateuser' element={<UpdateUserPage/>}/>
 
       </Routes>
       </BrowserRouter>
