@@ -5,7 +5,7 @@ import {InputField} from '../components/InputField'
 import {SignButton} from '../components/SignButton'
 import { Quote } from "../components/Quote";
 import { useNavigationHandler } from "../hooks/useNavigationHandler";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from 'axios'
 import {backend} from '../../config/config'
 import {signUpType} from '@vijeshvs/common2/dist/index'
@@ -20,6 +20,21 @@ export function SignUp (){
     const usernameHandler = (e) => setuserName(e.target.value)
     const passHandler = (e) => setPass(e.target.value)
     const emailHandler = (e) => setEmail(e.target.value)
+
+    const checkIfLoggedIn = async ()=>{
+        const response = await fetch(backend+'/user/isLoggedIn',{
+            headers: {
+                Authorization : localStorage.getItem('token')
+            }
+        })
+        if(response.status == 200){
+            toast.success("User already logged in !!")
+            navigationHandler('feed')
+        }
+    }
+    useEffect(()=>{
+        checkIfLoggedIn();
+    },[])  
 
     async function userSignup(){
         const user = {

@@ -135,3 +135,38 @@ user.post('/signup', async (c) => {
     }
 
  })
+
+ user.get('/isLoggedIn',async (c)=>{
+  const prisma = c.get('prisma')
+  const token_header = c.req.header('authorization') || "no user";
+  const token = token_header.split(' ')[1];
+
+    try{
+      const user = await verify(token,c.env.JWT_SECRET);
+
+      c.set("userId",user.id)
+
+      const res = await prisma.user.findFirst({
+        where: {
+          id : user.id
+        }
+      })
+      if(!res){
+        c.status(203)
+        return c.json({
+          msg:"User not logged in!!"
+        })
+      }
+    }
+    catch(e){
+      c.status(203)
+      return c.json({
+        msg: "User not logged in"
+      })
+    }
+    
+    return c.json({
+      msg: "User already logged in!!"
+    })
+
+ })

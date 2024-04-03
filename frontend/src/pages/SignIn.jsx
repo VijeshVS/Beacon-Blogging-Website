@@ -5,7 +5,7 @@ import {InputField} from '../components/InputField'
 import {SignButton} from '../components/SignButton'
 import { Quote } from "../components/Quote";
 import { useNavigationHandler } from "../hooks/useNavigationHandler";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from 'axios'
 import {toast} from 'react-toastify'
 import {backend} from '../../config/config'
@@ -14,6 +14,25 @@ export function SignIn (){
     const navigationHandler = useNavigationHandler();
     const [email,setEmail] = useState("")
     const [pass,setPass] = useState("")
+
+    const checkIfLoggedIn = async ()=>{
+        
+        const response = await fetch(backend+'/user/isLoggedIn',{
+            headers: {
+                Authorization : localStorage.getItem('token')
+            }
+        })
+
+        if(response.status == 200){
+            toast.success("User already logged in !!")
+            navigationHandler('feed')
+        }
+        
+    }
+
+    useEffect(()=>{
+        checkIfLoggedIn();
+    },[])   
 
     async function signinFunction(){
         try{

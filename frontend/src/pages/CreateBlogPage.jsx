@@ -12,6 +12,11 @@ export function CreateBlogPost(){
     const navigationHandler = useNavigationHandler();
 
     async function createBlogFunction(){
+        if(!title || !story || !desc){
+            toast.error("Please fill out all the details to publish")
+            return;
+        }
+
         const post = {
             title: title,
             content : story,
@@ -27,6 +32,7 @@ export function CreateBlogPost(){
             success: "Blog published successfully",
             error: "Error publishing blog"
         })
+
     }
     catch(e){
         if(e.response.status == 403){
