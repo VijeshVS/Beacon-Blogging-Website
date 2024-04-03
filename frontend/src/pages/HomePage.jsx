@@ -3,9 +3,11 @@ import { NavBar } from "../components/NavBar";
 import { useState,useEffect } from "react";
 import axios from 'axios'
 import {backend} from '../../config/config'
+import {LoadingSkeleton} from '../components/LoadingSkeleton'
 
 export function Homepage(){
     const [posts,setPosts] = useState([])
+    const [loading,setLoading] = useState(true)
 
     const recall = async ()=>{
       
@@ -15,7 +17,7 @@ export function Homepage(){
                 }
             });
             setPosts(response.data.posts)
-            console.log(response.data)
+            setLoading(false)
     }
 
     useEffect(()=>{
@@ -24,6 +26,6 @@ export function Homepage(){
 
     return <div>
         <NavBar/>
-        <BlogList posts = {posts}/>
+        {loading?<LoadingSkeleton/>:<BlogList posts={posts}/>}
     </div>
 }

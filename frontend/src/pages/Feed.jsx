@@ -1,13 +1,15 @@
 import {CreateBlogPostNavbar} from '../components/CreateBlogNavBar'
 import {useNavigationHandler} from '../hooks/useNavigationHandler'
-import {MyFeedBlog} from '../components/MyFeedBlog'
-import { useState,useMemo, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios'
 import { backend } from '../../config/config';
+import { BlogList } from '../components/BlogList';
+import {LoadingSkeleton} from '../components/LoadingSkeleton'
 
 export function Feed (){
     const [navActive,setnavActive] = useState(true);
     let [posts,setPosts] = useState([])
+    const [loading,setLoading] = useState(true)
 
     let navStyling = 'text-lg ml-3 hover:border-b-2 hover:border-gray-300 pb-1 cursor-pointer';
     let foryouStyling = navActive?navStyling+' text-blue-600':navStyling
@@ -21,7 +23,7 @@ export function Feed (){
                 }
             });
             setPosts(response.data.posts)
-            console.log(response.data)
+            setLoading(false)
         }
     }
 
@@ -36,6 +38,8 @@ export function Feed (){
         <h1 className={foryouStyling} onClick={()=>setnavActive(true)}>For you</h1>
         <h1 className={myblogStyling} onClick={()=>setnavActive(false)}>My Blogs</h1>
         </div>
-        <MyFeedBlog posts={posts}/>
+        <div className='flex '>
+        {loading?<LoadingSkeleton/>:<BlogList posts={posts}/>}
+        </div>
     </div>    
 }

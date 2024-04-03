@@ -1,5 +1,15 @@
+import { useNavigate } from "react-router-dom";
+
 export function BlogComponent({post}){
-    return <div className="mt-2 hover:bg-gray-50 w-fit cursor-pointer p-1 border-b-2 border-gray-200">
+    const navigate = useNavigate();
+
+    function onClickHandler(){
+        navigate('/blog/'+post.id,{
+            state: post
+        })
+    }
+
+    return <div onClick={onClickHandler} className="mt-2 hover:bg-gray-50 w-fit cursor-pointer p-1 border-b-2 border-gray-200">
         <div className="flex">
             <div className="mt-4 flex items-center">
                 <img className="h-10 w-10 rounded-3xl border-2 border-gray-200" src="https://t4.ftcdn.net/jpg/04/06/91/91/360_F_406919161_J0pGxe1sewqnk5dnvyRS77MKmEd6SVac.jpg"/>

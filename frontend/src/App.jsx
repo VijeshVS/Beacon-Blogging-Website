@@ -1,4 +1,3 @@
-import { Test } from './pages/test'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { SignUp } from './pages/SignUp'
@@ -19,7 +18,6 @@ function App() {
       <ToastContainer/>
       <BrowserRouter>
       <Routes>
-        <Route path='/test' element={<Test/>}/>
         <Route path='/signup' element={<SignUp/>}/>
         <Route path='/signin' element={<SignIn/>}/>
         <Route path='/blog/:id' element={<BlogPage/>}/>
