@@ -16,7 +16,11 @@ export const blog = new Hono<{
   blog.use('*', async(c,next)=>{
     const token_header = c.req.header('authorization') || "no user";
     const token = token_header.split(' ')[1];
-  
+    
+    if(c.req.path == "/api/v1/blog/post/bulk"){
+      await next();
+    }
+
     try{
       const user = await verify(token,c.env.JWT_SECRET);
       c.set("userId",user.id) 
@@ -25,7 +29,7 @@ export const blog = new Hono<{
     catch(e){
       c.status(403)
       return c.json({
-        msg:"User is not authenticated",
+        msg:"User is not authenticated"
       })
     }
   })
@@ -123,6 +127,9 @@ export const blog = new Hono<{
       const post = await prisma.Post.findFirst({
         where:{
           id
+        },
+        include:{
+          author: true
         }
       })
       return c.json({
@@ -138,7 +145,11 @@ export const blog = new Hono<{
   
   blog.get('/post/bulk', async (c) => {
       const prisma = c.get('prisma')
-      const posts = await prisma.Post.findMany()
+      const posts = await prisma.Post.findMany({
+        include:{
+          author : true
+        }
+      })
 
       return c.json({
         posts

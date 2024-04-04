@@ -8,7 +8,6 @@ import { useNavigationHandler } from "../hooks/useNavigationHandler";
 import { useState,useEffect } from "react";
 import axios from 'axios'
 import {backend} from '../../config/config'
-import {signUpType} from '@vijeshvs/common2/dist/index'
 import {toast} from 'react-toastify'
 
 export function SignUp (){
@@ -54,7 +53,7 @@ export function SignUp (){
             setPass("");
             return;
         }
-        
+        console.log(response)
         localStorage.setItem('token','Bearer '+ response.data.token) 
         navigationHandler('feed')
 

@@ -9,6 +9,7 @@
     "@vijeshvs/common2": "^1.0.4",
     "cors": "^2.8.5",
     "hono": "^4.1.1",
+    "lottie-web": "^5.12.2",
     "prisma": "^5.11.0"
   },
   "devDependencies": {

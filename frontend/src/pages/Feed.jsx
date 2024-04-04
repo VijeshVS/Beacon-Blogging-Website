@@ -1,10 +1,11 @@
 import {CreateBlogPostNavbar} from '../components/CreateBlogNavBar'
 import {useNavigationHandler} from '../hooks/useNavigationHandler'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import axios from 'axios'
 import { backend } from '../../config/config';
 import { BlogList } from '../components/BlogList';
 import {LoadingSkeleton} from '../components/LoadingSkeleton'
+import { decodeToken } from "react-jwt";
 
 export function Feed (){
     const [navActive,setnavActive] = useState(true);
@@ -15,20 +16,35 @@ export function Feed (){
     let foryouStyling = navActive?navStyling+' text-blue-600':navStyling
     let myblogStyling = navActive?navStyling:navStyling+' text-blue-600'
 
-    const recall = async ()=>{
-        if(navActive){
+    const recall = async (id)=>{
             const response = await axios.get(backend + '/blog/post/bulk',{
                 headers:{
                     Authorization : localStorage.getItem('token')
                 }
             });
-            setPosts(response.data.posts)
+            let data = response.data.posts
+            if(!navActive){
+                data = data.filter((p)=>{
+                    if(p.authorId == id)
+                        return true;
+                    else
+                        return false;
+                })
+            }
+
+            setPosts(data)
             setLoading(false)
-        }
+            
     }
 
     useEffect(()=>{
-        recall();
+        const myDecodedToken = decodeToken(localStorage.getItem('token'));
+        const id = myDecodedToken.id;
+        recall(id);
+
+        return ()=>{
+            setLoading(true)
+        }
    },[navActive])
 
     const navigator = useNavigationHandler();

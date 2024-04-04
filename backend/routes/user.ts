@@ -2,6 +2,7 @@ import { Hono } from 'hono'
 import { sign } from 'hono/jwt'
 import { signUpInput,signInInput,signInType,signUpType,UserUpdateInput,UserUpdateType } from '@vijeshvs/common2/dist/index'
 import {verify} from 'hono/jwt'
+import { use } from 'hono/jsx'
 
 export const user = new Hono<{
     Bindings:{
@@ -117,7 +118,8 @@ user.post('/signup', async (c) => {
 
       await prisma.user.update({
         where: {
-          id : user.id
+          id : user.id,
+          password : body.password
         },
         data : UserData
       })
@@ -168,5 +170,34 @@ user.post('/signup', async (c) => {
     return c.json({
       msg: "User already logged in!!"
     })
+ })
 
+ user.get('/',async (c)=>{
+    const prisma = c.get('prisma')
+    const token_header = c.req.header('authorization') || "no user";
+    const token = token_header.split(' ')[1];
+
+    try{
+      const user = await verify(token,c.env.JWT_SECRET);
+      c.set("userId",user.id)
+
+      const userFound = await prisma.user.findFirst({
+        where: {
+          id : user.id
+        }
+      })
+
+      return c.json({
+        name: userFound.name,
+        email : userFound.email,
+        imgLink : userFound.imgLink
+      })
+
+    }
+    catch(e){
+      c.status(403)
+      return c.json({
+        msg:"User is not authenticated",
+      })
+    }
  })
