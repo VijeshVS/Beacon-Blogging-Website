@@ -6,7 +6,7 @@ export function BlogComponent({post}){
         navigate('/blog/'+post.id)
     }
 
-    return <div onClick={onClickHandler} className="mt-2 hover:bg-gray-50 w-fit cursor-pointer p-1 border-b-2 border-gray-200">
+    return <div onClick={onClickHandler} className="mt-2 ml-6 hover:bg-gray-50 w-fit cursor-pointer p-1 border-b-2 border-gray-200">
         <div className="flex">
             <div className="mt-4 flex items-center">
                 <img className="h-10 w-10 rounded-3xl border-2 border-gray-200" src={post.author.imgLink}/>

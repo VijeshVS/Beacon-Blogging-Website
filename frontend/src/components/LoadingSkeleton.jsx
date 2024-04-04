@@ -1,5 +1,5 @@
 export function LoadingSkeleton(){
-    return <div class="border border-blue-300 shadow rounded-md ml-8 mt-8 p-4 max-w-sm w-full">
+    return <div class="border border-blue-300 shadow rounded-md mt-8 p-4 max-w-sm w-full">
     <div class="animate-pulse flex space-x-4">
       <div class="rounded-full bg-slate-700 h-10 w-10"></div>
       <div class="flex-1 space-y-6 py-1">
