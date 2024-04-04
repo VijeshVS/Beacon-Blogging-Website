@@ -26,6 +26,8 @@ export function Homepage(){
 
     return <div>
         <NavBar/>
+        <div className="flex justify-center">
         {loading?<LoadingSkeleton/>:<BlogList posts={posts}/>}
+        </div>
     </div>
 }
