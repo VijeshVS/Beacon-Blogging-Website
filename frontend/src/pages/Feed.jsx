@@ -12,6 +12,11 @@ export function Feed (){
     let [posts,setPosts] = useState([])
     const [loading,setLoading] = useState(true)
 
+    function shuffle(array) {
+        array.sort(() => Math.random() - 0.5);
+        return array
+      }      
+
     let navStyling = 'text-lg ml-3 hover:border-b-2 hover:border-gray-300 pb-1 cursor-pointer';
     let foryouStyling = navActive?navStyling+' text-blue-600':navStyling
     let myblogStyling = navActive?navStyling:navStyling+' text-blue-600'
@@ -31,7 +36,7 @@ export function Feed (){
                         return false;
                 })
             }
-
+            data = shuffle(data)
             setPosts(data)
             setLoading(false)
             
@@ -50,11 +55,11 @@ export function Feed (){
     const navigator = useNavigationHandler();
     return <div>
         <CreateBlogPostNavbar text="New Blog" toRoute="newblog" handler = {navigator}/>
-        <div className='flex px-10 mt-4'>
+        <div className='flex mt-4 justify-center '>
         <h1 className={foryouStyling} onClick={()=>setnavActive(true)}>For you</h1>
         <h1 className={myblogStyling} onClick={()=>setnavActive(false)}>My Blogs</h1>
         </div>
-        <div className='flex '>
+        <div className='flex justify-center'>
         {loading?<LoadingSkeleton/>:<BlogList posts={posts}/>}
         </div>
     </div>    
