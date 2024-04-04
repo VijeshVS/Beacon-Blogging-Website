@@ -2,7 +2,6 @@ import { Hono } from 'hono'
 import { sign } from 'hono/jwt'
 import { signUpInput,signInInput,signInType,signUpType,UserUpdateInput,UserUpdateType } from '@vijeshvs/common2/dist/index'
 import {verify} from 'hono/jwt'
-import { use } from 'hono/jsx'
 
 export const user = new Hono<{
     Bindings:{
@@ -201,3 +200,4 @@ user.post('/signup', async (c) => {
       })
     }
  })
+
