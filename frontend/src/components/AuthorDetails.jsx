@@ -1,13 +1,11 @@
 export function AuthorDetails({author}){
 
-    return <div className="m-20">
-        <h1 className="text-gray-500 ml-1 text-xl">Author</h1>
+    return <div className="mt-2">
         <div className="flex mt-6">
-            <img src={author.imgLink} className="h-16 w-16 rounded-2xl"/>
+            <img src={author.imgLink} className="h-12 w-12 rounded-2xl"/>
             <div className="flex ml-4 items-center">
             <h1 className="font-medium">{author.name}</h1>
             </div>
         </div>
-        <h1 className="text-gray-700 mt-4">{author.description?author.description:`Hello there ${author.name} here !!`}</h1>
     </div>
 }

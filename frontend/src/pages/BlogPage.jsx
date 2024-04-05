@@ -1,5 +1,4 @@
 import { useState,useEffect } from "react";
-import { AuthorDetails } from "../components/AuthorDetails";
 import { BlogTitle } from "../components/BlogTitle";
 import { BlogLoadingSkeleton } from "../components/BlogLoadingSkeleton";
 import axios from 'axios'
@@ -31,9 +30,6 @@ export function BlogPage(){
     return <div className="flex w-full h-screen">
         <div className="w-full md:basis-5/6">
         <BlogTitle post={post}/>
-        </div>
-        <div className="hidden md:basis-2/6 md:visible">
-        <AuthorDetails author={post.author}/>
         </div>
     </div>
 }

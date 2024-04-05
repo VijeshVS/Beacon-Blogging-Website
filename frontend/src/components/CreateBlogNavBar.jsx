@@ -7,7 +7,7 @@ import { backend } from '../../config/config';
 
 export function CreateBlogPostNavbar({text,handler,toRoute}){
     const navigator = useNavigationHandler();
-    const [imgLink,setimgLink] = useState("https://avatar.iran.liara.run/public/30")
+    const [imgLink,setimgLink] = useState("https://t3.ftcdn.net/jpg/02/44/17/82/360_F_244178265_NP4S8WdlZRGYVSkVkxhtiDonSfQPAbyO.jpg")
 
     useEffect(()=>{
         axios.get(backend+ '/user',{

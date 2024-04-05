@@ -56,11 +56,11 @@ export function Feed (){
     const navigator = useNavigationHandler();
     return <div>
         <CreateBlogPostNavbar text="New Blog" toRoute="newblog" handler = {navigator}/>
-        <div className='flex mt-4 justify-center'>
+        <div className='flex mt-4 start-10 md:justify-center'>
         <h1 className={foryouStyling} onClick={()=>setnavActive(true)}>For you</h1>
         <h1 className={myblogStyling} onClick={()=>setnavActive(false)}>My Blogs</h1>
         </div>
-        <div className='flex justify-center'>
+        <div className='flex start-0 md:justify-center'>
         {loading?<div className='flex flex-col w-full items-center'><LoadingSkeleton/> <LoadingSkeleton/> <LoadingSkeleton/><LoadingSkeleton/></div>:<BlogList posts={posts}/>}
         </div>
     </div>    
