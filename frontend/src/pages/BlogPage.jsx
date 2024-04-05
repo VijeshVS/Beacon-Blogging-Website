@@ -29,10 +29,10 @@ export function BlogPage(){
         return <div className="flex justify-center items-center bg-black font-bold text-white text-2xl h-screen">Blog not found</div>
 
     return <div className="flex w-full h-screen">
-        <div className="basis-5/6">
+        <div className="w-full md:basis-5/6">
         <BlogTitle post={post}/>
         </div>
-        <div className="basis-2/6 ">
+        <div className="hidden md:basis-2/6 md:visible">
         <AuthorDetails author={post.author}/>
         </div>
     </div>
