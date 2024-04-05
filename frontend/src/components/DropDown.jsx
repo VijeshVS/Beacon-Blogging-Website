@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {toast} from 'react-toastify'
 import { useNavigationHandler } from "../hooks/useNavigationHandler";
 
-export function DropDown () {
+export function DropDown ({imgLink}) {
     const [drop,setDrop] = useState(false);
     const [classDrop,setclassDrop] = useState("")
     const navigation = useNavigationHandler();
@@ -19,7 +19,7 @@ export function DropDown () {
     <div>
     <img onClick={()=>{
         setDrop((c)=>!c)
-    }} className="ml-3 h-10 w-10 rounded-3xl border-2 border-gray-200 cursor-pointer" src="https://t4.ftcdn.net/jpg/04/06/91/91/360_F_406919161_J0pGxe1sewqnk5dnvyRS77MKmEd6SVac.jpg"/>
+    }} className="ml-3 h-10 w-10 rounded-3xl border-2 border-gray-200 cursor-pointer" src={imgLink}/>
     </div>
     <div class={classDrop} role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
       <div class="py-1" role="none">

@@ -7,6 +7,7 @@ import { BlogList } from '../components/BlogList';
 import {LoadingSkeleton} from '../components/LoadingSkeleton'
 import { decodeToken } from "react-jwt";
 
+
 export function Feed (){
     const [navActive,setnavActive] = useState(true);
     let [posts,setPosts] = useState([])

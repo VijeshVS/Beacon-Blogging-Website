@@ -1,8 +1,23 @@
 import {Buttons} from './Buttons'
 import {useNavigationHandler} from '../hooks/useNavigationHandler'
 import { DropDown } from './DropDown';
+import { useEffect,useState } from 'react';
+import axios from 'axios'
+import { backend } from '../../config/config';
+
 export function CreateBlogPostNavbar({text,handler,toRoute}){
     const navigator = useNavigationHandler();
+    const [imgLink,setimgLink] = useState("https://avatar.iran.liara.run/public/30")
+
+    useEffect(()=>{
+        axios.get(backend+ '/user',{
+            headers: {
+                Authorization: localStorage.getItem('token')
+            }
+        }).then((res)=>{
+            setimgLink(res.data.imgLink)
+        })
+    },[])
 
     return <div className="flex justify-between px-4 md:px-12 mt-3 pt-6 pb-4 border-b-2 border-gray-50">
         <div className="flex cursor-pointer" onClick={()=>navigator('feed')}>
@@ -14,7 +29,7 @@ export function CreateBlogPostNavbar({text,handler,toRoute}){
         <Buttons text={text} toRoute={toRoute} handler={handler}/>
         </div>  
         <div>
-        <DropDown/>
+        <DropDown imgLink = {imgLink}/>
         </div>
         </div>
 </div>

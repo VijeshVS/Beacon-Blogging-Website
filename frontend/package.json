@@ -12,6 +12,7 @@
   "dependencies": {
     "@vijeshvs/common2": "^1.0.4",
     "axios": "^1.6.8",
+    "flowbite-react": "^0.8.0",
     "fontawesome": "^5.6.3",
     "jsonwebtoken": "^9.0.2",
     "lottie-web": "^5.12.2",

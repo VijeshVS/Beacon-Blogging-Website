@@ -14,6 +14,7 @@ export function SignIn (){
     const navigationHandler = useNavigationHandler();
     const [email,setEmail] = useState("")
     const [pass,setPass] = useState("")
+    const [loading,setLoading] = useState(true)
 
     const checkIfLoggedIn = async ()=>{
         
@@ -27,7 +28,7 @@ export function SignIn (){
             toast.success("User already logged in !!")
             navigationHandler('feed')
         }
-        
+        setLoading(false)
     }
 
     useEffect(()=>{
@@ -57,6 +58,11 @@ export function SignIn (){
 
     const emailHandler = (e) => setEmail(e.target.value)
     const passHandler = (e) => setPass(e.target.value)
+
+    if(loading)
+        return <div>
+            loading.....
+        </div>
 
     return <div className="flex w-full h-screen">
         <div className="flex flex-1 flex-row justify-center items-center">

@@ -11,6 +11,7 @@ export function CreateBlogPost(){
     const [story,setStory] = useState("")
     const navigationHandler = useNavigationHandler();
 
+
     async function createBlogFunction(){
         if(!title || !story || !desc){
             toast.error("Please fill out all the details to publish")
