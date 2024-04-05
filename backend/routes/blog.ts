@@ -13,6 +13,32 @@ export const blog = new Hono<{
     }
 }>();
 
+blog.get('/:id', async (c) => {
+  const id = c.req.param('id');
+  console.log(id)
+  const prisma = c.get('prisma')
+
+  try{
+    const post = await prisma.Post.findFirst({
+      where:{
+        id
+      },
+      include:{
+        author: true
+      }
+    })
+    return c.json({
+      post
+    })
+  }
+  catch(e){
+    return c.json({
+      msg:"Error while fetching the post"
+    })
+  }
+})
+
+
   blog.use('*', async(c,next)=>{
     const token_header = c.req.header('authorization') || "no user";
     const token = token_header.split(' ')[1];
@@ -29,7 +55,8 @@ export const blog = new Hono<{
     catch(e){
       c.status(403)
       return c.json({
-        msg:"User is not authenticated"
+        msg:"User is not authenticated",
+        bruh : c.req.path
       })
     }
   })
@@ -118,30 +145,7 @@ export const blog = new Hono<{
     }
   })
   
-  blog.get('/:id', async (c) => {
-    const id = c.req.param('id');
-    console.log(id)
-    const prisma = c.get('prisma')
 
-    try{
-      const post = await prisma.Post.findFirst({
-        where:{
-          id
-        },
-        include:{
-          author: true
-        }
-      })
-      return c.json({
-        post
-      })
-    }
-    catch(e){
-      return c.json({
-        msg:"Error while fetching the post"
-      })
-    }
-  })
   
   blog.get('/post/bulk', async (c) => {
       const prisma = c.get('prisma')
