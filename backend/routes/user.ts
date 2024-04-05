@@ -71,22 +71,23 @@ user.post('/signup', async (c) => {
         msg: "Invalid Inputs!!"
       })
     }
-   
-    try{
+    
       const user = await prisma.user.findFirst({
         where: newUser
       })
+
+      if(!user){
+        c.status(403)
+        return c.json({
+          msg:"Error while signing in"
+        })
+      }
+
       const token = await sign({id:user.id},c.env.JWT_SECRET)
       return c.json({
         token
       })
-    }
-    catch(e){
-      return c.json({
-        msg:"Error while signing in"
-      })
-    }
-  })
+})
 
  user.post('/update',async (c)=>{
     const prisma = c.get('prisma')

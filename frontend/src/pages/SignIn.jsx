@@ -42,16 +42,15 @@ export function SignIn (){
             }),{
                 pending: "Signing you in.....",
                 success: "Signed in successfully!!",
-                error: "Error occured while signing you in"
+                error: "Wrong credentials !!"
             })
-
             localStorage.setItem('token','Bearer '+res.data.token)
-            navigationHandler('feed')
+            if(res.data.token)
+                navigationHandler('feed')
         }
         catch(e){
             setEmail("")
             setPass("")
-            toast.error("Wrong credentials!!")
         }
         
     }
