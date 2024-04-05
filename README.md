@@ -17,7 +17,7 @@ Deployed using Vercel
 
 ## Demo
 
-https://beacon-blogging-website.vercel.app/
+https://beacon-blog.vercel.app/
 
 
 
