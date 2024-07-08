@@ -16,25 +16,16 @@ type Variables = {
   prisma : any
 }
 
-const app = new Hono<{
+export const app = new Hono<{
   Bindings : Bindings,
   Variables : Variables
 }>()
 
 app.use(cors())
 
-app.use('*', async (c,next) => {
-	const prisma = new PrismaClient({
-      datasourceUrl: c.env.DATABASE_URL,
-  }).$extends(withAccelerate());
-  c.set('prisma', prisma);
-  await next();
-})
 
 app.route('/api/v1/user',user);
 app.route('/api/v1/blog',blog)
-
-
 
 
 export default app

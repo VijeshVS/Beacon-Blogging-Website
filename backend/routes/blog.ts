@@ -1,22 +1,22 @@
 import { Hono } from 'hono'
 import { verify } from 'hono/jwt';
 import { createPostInput, createPostType,updatePostInput,updatePostType } from '@vijeshvs/common2/dist';
+import { PrismaClient } from '@prisma/client/extension';
+import { prisma } from '../src/db';
 
 export const blog = new Hono<{
     Bindings:{
-        DATABASE_URL:string,
         JWT_SECRET:string
     },
     Variables:{
         userId : string,
-        prisma: any
+        prisma: PrismaClient
     }
 }>();
 
 blog.get('/:id', async (c) => {
   const id = c.req.param('id');
   console.log(id)
-  const prisma = c.get('prisma')
 
   try{
     const post = await prisma.Post.findFirst({
@@ -63,7 +63,6 @@ blog.get('/:id', async (c) => {
   
   blog.post('/', async (c) => {
     const userId = c.get('userId')
-    const prisma = c.get('prisma')
     const body = await c.req.json();
 
     let date = new Date(Date.now());
@@ -106,7 +105,6 @@ blog.get('/:id', async (c) => {
   })
   
   blog.put('/', async (c) => {
-    const prisma = c.get('prisma')
     const body = await c.req.json();
     const post_id = body.postId;
     
@@ -145,15 +143,13 @@ blog.get('/:id', async (c) => {
     }
   })
   
-
-  
   blog.get('/post/bulk', async (c) => {
-      const prisma = c.get('prisma')
       const posts = await prisma.Post.findMany({
         include:{
           author : true
         }
       })
+      c.status(200)
 
       return c.json({
         posts
