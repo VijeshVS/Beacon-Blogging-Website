@@ -149,7 +149,7 @@ blog.get('/:id', async (c) => {
           author : true
         }
       })
-      c.status(200)
+      c.status(201)
 
       return c.json({
         posts
